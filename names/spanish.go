@@ -1,0 +1,34 @@
+package names
+
+import (
+	"github.com/ilmaruk/cooltures"
+)
+
+type Spanish struct {
+	Rand cooltures.Randomiser
+}
+
+func NewSpanish(r cooltures.Randomiser) Generator {
+	return Spanish{
+		Rand: r,
+	}
+}
+
+func (s Spanish) Name(g Gender) string {
+	return s.FirstName(g) + " " + s.LastName()
+}
+
+func (s Spanish) FirstName(g Gender) string {
+	return singleName(s.Rand, getSources(g, spaFirstNames))
+}
+
+func (s Spanish) LastName() string {
+	return doubleName(s.Rand, spaLastNames, true)
+}
+
+var spaFirstNames = map[Gender][]string{
+	GenderFemale: {"Adriana", "Agustina", "Aida", "Aldea", "Alejandra", "Alicia", "Alma", "Almudena", "Amalia", "Amaya", "Amparo", "Ana", "Anabel", "Andrea", "Andreina", "Anita", "Antonella", "Antonia", "Araceli", "Aurora", "Beatriz", "Bettina", "Bianca", "Blanca", "Blanche", "Bonita", "Cari", "Carina", "Carla", "Carlota", "Carlota", "Carmelita", "Carolina", "Catalina", "Celia", "Chara", "Claudia", "Concepción", "Conchita", "Consuelo", "Cristina", "Cynthia", "Delia", "Diana", "Dolores", "Dora", "Elena", "Eliana", "Elisa", "Elvira", "Erika", "Esperanza", "Ester", "Eugenia", "Eva", "Fatima", "Fernanda", "Fiorella", "Flavia", "Flora", "Gabriela", "Garbiñe", "Gisela", "Gloria", "Guiomar", "Helena", "Hilda", "Ignacia", "Ileana", "Ilona", "Imelda", "Ines", "Inez", "Irene", "Iris", "Isa", "Isabel", "Ivette", "Ivonne", "Jacin", "Javiera", "Joaquina", "Josefa", "Josefina", "Juana", "Julia", "Justina", "Karina", "Laia", "Lana", "Lara", "Laura", "Lena", "Lidia", "Liliana", "Lolita", "Lorena", "Lucia", "Luciana", "Luisa", "Lupe", "Lupita", "Luz", "Macarena", "Magdalena", "Manuela", "Marcela", "Margarita", "Maria", "Mariana", "Mariela", "Marina", "Marisa", "Marisela", "Marisol", "Marta", "Martina", "Maru", "Maruja", "Maura", "Maya", "Melania", "Melina", "Mercedes", "Merilyn", "Milagros", "Milena", "Millaray", "Mirta", "Morena", "Nadia", "Natalia", "Nazaret", "Nena", "Noelia", "Núria", "Olga", "Paloma", "Paula", "Paulina", "Pierina", "Pilar", "Purita", "Ramona", "Raquel", "Rita", "Rocío", "Rosa", "Rosalia", "Rosario", "Salma", "Silvia", "Silvina", "Simone", "Soledad", "Sonia", "Sophia", "Soraya", "Tamara", "Tara", "Tatiana", "Teresa", "Tomasa", "Tona", "Tonia", "Urraca", "Valentina", "Valeria", "Veronica", "Vilma", "Viola", "Violeta", "Virginia", "Viridiana", "Xiomara", "Xóchitl", "Yanet", "Yazmin", "Zulema"},
+	GenderMale:   {"Aarón", "Abel", "Abelardo", "Abraham", "Adan", "Ademar", "Adrià", "Adriano", "Agustín", "Alberto", "Alejandro", "Alfredo", "Alonso", "Alphons", "Álvaro", "Amílcar", "Ángel", "Aníbal", "Antero", "Antonin", "Antonio", "Armando", "Arnaldo", "Arnulfo", "Arsenio", "Arturo", "Augusto", "Aznar", "Benito", "Bernardo", "Beto", "Bruno", "Camilo", "Carlito", "Carlo", "Carlos", "Carmelo", "Cayetano", "Cesar", "Charli", "Cipriano", "Cristhian", "Cristóbal", "Cuauhtémoc", "Danilo", "Dámaso", "Damián", "Daniel", "Dario", "David", "Diego", "Edgardo", "Eduardo", "Efraín", "Elbio", "Eliseo", "Elpidio", "Emilio", "Enrique", "Ernesto", "Estanislau", "Esteban", "Eugenio", "Ezequiel", "Fabricio", "Fausto", "Federico", "Feliciano", "Felipe", "Fernando", "Flavio", "Florencio", "Florentin", "Francisco", "Fulgencio", "Gabriel", "Gaspar", "Genovevo", "Germán", "Geronimo", "Gilberto", "Ginés", "Gonzalo", "Gregorio", "Guido", "Guillermo", "Gustavo", "Gutierre", "Hector", "Heriberto", "Hermenegild", "Hernán", "Hernándo", "Hugo", "Ignacio", "Inigo", "Jacinto", "Jaime", "Jairo", "Javier", "Jerónimo", "Jhon", "Jimeno", "Joaquín", "Jorge", "José", "Juan", "Juanfran", "Juanma", "Julián", "Julio", "Jusepe", "Leandro", "Leon", "Leonardo", "Leopoldo", "Liberato", "Liberto", "Lorenzo", "Lotario", "Luca", "Lucero", "Luciano", "Lucio", "Luis", "Maikel", "Manolito", "Manolo", "Manrique", "Manuel", "Marcelino", "Marcelo", "Marco", "Marcos", "Mariano", "Mario", "Mateo", "Matías", "Mauricio", "Maximiliano", "Melquíades", "Miguel", "Miguel Ángel", "Milo", "Nacho", "Nahuel", "Napoleon", "Narciso", "Nazario", "Nemesio", "Nestor", "Nicolas", "Niño", "Noe", "Nuño", "Obdulio", "Omar", "Oscar", "Osorio", "Osvaldo", "Oswaldo", "Pablo", "Paco", "Panfilo", "Pascual", "Pasqual", "Patricio", "Pedro", "Pepe", "Perez", "Primitivo", "Quique", "Rafa", "Ramiro", "Ramón", "Raphael", "Raul", "Reinaldo", "Reno", "Ricardo", "Roberto", "Rodolfo", "Rodrigo", "Rogelio", "Rolando", "Roman", "Ronaldo", "Rosendo", "Salvador", "Samuel", "Santiago", "Sebastian", "Servando", "Silvestre", "Sixto", "Suero", "Tato", "Tomás", "Toni", "Tonin", "Tonino", "Tonio", "Tono", "Ulises", "Venancio", "Vicente", "Víctor", "Victorino", "Vladimiro", "Wenceslao", "Wilfredo", "Xavi", "Zé Carlos"},
+}
+
+var spaLastNames = []string{"Abadía", "Abalo", "Abarca", "Abascal", "Abrigo", "Abril", "Acevedo", "Aceves", "Acosta", "Acurio", "Adames", "Adan", "Agosto", "Agron", "Aguado", "Agüera", "Agüero", "Aguilar", "Aguiluz", "Aguinis", "Aguirre", "Aicart", "Aispuro", "Alas", "Alba", "Albacete", "Albaladejo", "Albareda", "Albarracín", "Albarrán", "Albizuri", "Albornoz", "Alburquerque", "Alcalá", "Alcantara", "Aldana", "Alderete", "Alegre", "Alegría", "Alén", "Alfonseca", "Almánzar", "Almirón", "Alonso", "Alonzo", "Alou", "Altamira", "Altamirano", "Altuve", "Alvarado", "Álvarez", "Álvaro", "Alvear", "Alzamora", "Amaro", "Amaya", "Amenábar", "Amescua", "Angulo", "Antuna", "Antúnez", "Aracil", "Aragonés", "Aranda", "Araya", "Arcaño", "Arce", "Arévalo", "Arévalos", "Argüello", "Arguello", "Ariza", "Armenteros", "Arredondo", "Arrese", "Arroyo", "Artajo", "Artime", "Asencio", "Asensi", "Asensio", "Asín", "Aspe", "Asquerino", "Astorga", "Astudillo", "Ávalos", "Ávila", "Avilés", "Aybar", "Aznar", "Azucena", "Baca", "Badillo", "Badosa", "Bähr", "Bahena", "Baillo", "Ballesta", "Ballesteros", "Baltra", "Banegas", "Barbero", "Barboza", "Barradas", "Barragan", "Barrientos", "Barrionuevo", "Barrios", "Barroso", "Barrueta", "Batista", "Bautista", "Baviera", "Bazan", "Becerril", "Bejarano", "Bellido", "Bello", "Beltrán", "Beltré", "Benavente", "Benitez", "Benito", "Bermudez", "Bernárdez", "Bernardino", "Berrios", "Bertolé", "Betancor", "Bettencourt", "Bielsa", "Bilbao", "Blanco", "Blandón", "Blas", "Bobadilla", "Bolaño", "Bolaños", "Bonastre", "Bonifaz", "Borges", "Borla", "Borrero", "Bossio", "Bracamontes", "Bracho", "Bravo", "Brenes", "Brugués", "Buenaventura", "Buendía", "Bueno", "Buenvenida", "Bustamante", "Butrón", "Cabal", "Caballero", "Cabello", "Calderón", "Callava", "Calle", "Caló", "Calvente", "Calviño", "Calvo", "Campillo", "Canino", "Cañizares", "Cannella", "Cantù", "Canzani", "Caraballo", "Caratachea", "Carazo", "Cárdenas", "Cardona", "Carlos", "Carmona", "Carpena", "Carpintero", "Carpio", "Carrasco", "Carrasquillo", "Carrera", "Carreras", "Carrero", "Cartagena", "Carvajal", "Casablancas", "Casas", "Casilla", "Casillas", "Casimiro", "Castañeda", "Castelblanco", "Castellano"}
