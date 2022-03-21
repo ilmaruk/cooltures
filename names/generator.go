@@ -7,8 +7,17 @@ type Generator interface {
 	LastName() string
 }
 
+const (
+	CultureEnglish Culture = "en"
+)
+
 func getGenerator(c Culture, r cooltures.Randomiser) Generator {
-	return simpleGenerator{rand: r}
+	switch c {
+	case CultureEnglish:
+		return englishGenerator{rand: r}
+	default:
+		return simpleGenerator{rand: r}
+	}
 }
 
 type simpleGenerator struct {

@@ -33,3 +33,7 @@ func (n Names) LastName(o Options) string {
 	g := getGenerator(o.Culture, n.rand)
 	return g.LastName()
 }
+
+func pickName(src []string, r cooltures.Randomiser) string {
+	return src[r.Intn(len(src))]
+}
