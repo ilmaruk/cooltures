@@ -16,9 +16,17 @@ type simpleGenerator struct {
 }
 
 func (s simpleGenerator) FirstName(g Gender) string {
-	return "first"
+	switch g {
+	case GenderFemale:
+		return "Jane"
+	case GenderMale:
+		return "Joe"
+	default:
+		names := []string{"Jane", "Joe"}
+		return names[s.rand.Intn(len(names))]
+	}
 }
 
 func (s simpleGenerator) LastName() string {
-	return "last"
+	return "Bloggs"
 }
