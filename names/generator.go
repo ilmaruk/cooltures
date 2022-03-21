@@ -1,36 +1,54 @@
 package names
 
-import "github.com/ilmaruk/cooltures"
+import (
+	"fmt"
+	"github.com/ilmaruk/cooltures"
+)
 
 type Generator interface {
 	FirstName(g Gender) string
 	LastName() string
+	SetRandomiser(r cooltures.Randomiser)
 }
 
 const (
 	CultureEnglish Culture = "en"
+	CultureItalian Culture = "it"
 )
 
-func getGenerator(c Culture, r cooltures.Randomiser) Generator {
-	switch c {
-	case CultureEnglish:
-		return simpleGenerator{
-			firstNames: engFirstNames,
-			lastNames:  engLastNames,
-			rand:       r,
-		}
-	default:
-		return simpleGenerator{
-			firstNames: map[Gender][]string{
-				GenderFemale: {"Jane"},
-				GenderMale:   {"Joe"},
-			},
-			lastNames: []string{"Bloggs"},
-			rand:      r,
-		}
-	}
+var cultureGenerators = map[Culture]Generator{
+	CultureEnglish: &simpleGenerator{
+		firstNames: engFirstNames,
+		lastNames:  engLastNames,
+	},
+	CultureItalian: &simpleGenerator{
+		firstNames: itaFirstNames,
+		lastNames:  itaLastNames,
+	},
 }
 
+func getGenerator(c Culture, r cooltures.Randomiser) (Generator, error) {
+	if c == CultureAny {
+		var generators = make([]Generator, 0, len(cultureGenerators))
+		for _, g := range cultureGenerators {
+			generators = append(generators, g)
+		}
+		g := generators[r.Intn(len(generators))]
+		g.SetRandomiser(r)
+		return g, nil
+	}
+
+	g, ok := cultureGenerators[c]
+	if !ok {
+		return nil, fmt.Errorf("culture not supported: %s", c)
+	}
+	g.SetRandomiser(r)
+	return g, nil
+}
+
+// simpleGenerator generates single first and last names from
+// given slices of names. Double first and last names should be
+// included in the provided slices.
 type simpleGenerator struct {
 	firstNames map[Gender][]string
 	lastNames  []string
@@ -48,4 +66,8 @@ func (s simpleGenerator) FirstName(g Gender) string {
 
 func (s simpleGenerator) LastName() string {
 	return pickName(s.lastNames, s.rand)
+}
+
+func (s *simpleGenerator) SetRandomiser(r cooltures.Randomiser) {
+	s.rand = r
 }

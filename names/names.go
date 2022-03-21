@@ -20,18 +20,32 @@ func New() Names {
 	return NewWithRandomiser(rand.New(rand.NewSource(time.Now().UnixNano())))
 }
 
-func (n Names) FullName(o Options) string {
-	return n.FirstName(o) + " " + n.LastName(o)
+func (n Names) FullName(o Options) (string, error) {
+	first, err := n.FirstName(o)
+	if err != nil {
+		return "", err
+	}
+	last, err := n.LastName(o)
+	if err != nil {
+		return "", err
+	}
+	return first + " " + last, nil
 }
 
-func (n Names) FirstName(o Options) string {
-	g := getGenerator(o.Culture, n.rand)
-	return g.FirstName(o.Gender)
+func (n Names) FirstName(o Options) (string, error) {
+	g, err := getGenerator(o.Culture, n.rand)
+	if err != nil {
+		return "", err
+	}
+	return g.FirstName(o.Gender), nil
 }
 
-func (n Names) LastName(o Options) string {
-	g := getGenerator(o.Culture, n.rand)
-	return g.LastName()
+func (n Names) LastName(o Options) (string, error) {
+	g, err := getGenerator(o.Culture, n.rand)
+	if err != nil {
+		return "", err
+	}
+	return g.LastName(), nil
 }
 
 func pickName(src []string, r cooltures.Randomiser) string {
