@@ -12,6 +12,8 @@ type Generator interface {
 
 const (
 	CultureEnglish Culture = "en"
+	CultureFrench  Culture = "fr"
+	CultureGerman  Culture = "de"
 	CultureItalian Culture = "it"
 	CultureSpanish Culture = "es"
 )
@@ -20,6 +22,14 @@ var cultureGenerators = map[Culture]Generator{
 	CultureEnglish: &simpleGenerator{
 		firstNames: engFirstNames,
 		lastNames:  engLastNames,
+	},
+	CultureFrench: &simpleGenerator{
+		firstNames: fraFirstNames,
+		lastNames:  fraLastNames,
+	},
+	CultureGerman: &simpleGenerator{
+		firstNames: gerFirstNames,
+		lastNames:  gerLastNames,
 	},
 	CultureItalian: &simpleGenerator{
 		firstNames: itaFirstNames,
