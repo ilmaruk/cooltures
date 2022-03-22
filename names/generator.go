@@ -15,6 +15,7 @@ const (
 	CultureFrench  Culture = "fr"
 	CultureGerman  Culture = "de"
 	CultureItalian Culture = "it"
+	CulturePolish  Culture = "pl"
 	CultureSpanish Culture = "es"
 )
 
@@ -34,6 +35,10 @@ var cultureGenerators = map[Culture]Generator{
 	CultureItalian: &simpleGenerator{
 		firstNames: itaFirstNames,
 		lastNames:  itaLastNames,
+	},
+	CulturePolish: &simpleGenerator{
+		firstNames: polFirstNames,
+		lastNames:  polLastNames,
 	},
 	CultureSpanish: &spanishGenerator{},
 }
