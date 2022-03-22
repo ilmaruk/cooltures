@@ -10,13 +10,15 @@ type Generator interface {
 	SetRandomiser(r cooltures.Randomiser)
 }
 
+// ISO 639-1
 const (
-	CultureEnglish Culture = "en"
-	CultureFrench  Culture = "fr"
-	CultureGerman  Culture = "de"
-	CultureItalian Culture = "it"
-	CulturePolish  Culture = "pl"
-	CultureSpanish Culture = "es"
+	CultureEnglish   Culture = "en"
+	CultureFrench    Culture = "fr"
+	CultureGerman    Culture = "de"
+	CultureItalian   Culture = "it"
+	CulturePolish    Culture = "pl"
+	CultureSpanish   Culture = "es"
+	CultureUkrainian Culture = "uk"
 )
 
 var cultureGenerators = map[Culture]Generator{
@@ -41,6 +43,10 @@ var cultureGenerators = map[Culture]Generator{
 		lastNames:  polLastNames,
 	},
 	CultureSpanish: &spanishGenerator{},
+	CultureUkrainian: &simpleGenerator{
+		firstNames: ukrFirstNames,
+		lastNames:  ukrLastNames,
+	},
 }
 
 func getGenerator(c Culture, r cooltures.Randomiser) (Culture, Generator) {
