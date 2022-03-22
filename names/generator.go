@@ -13,6 +13,7 @@ type Generator interface {
 const (
 	CultureEnglish Culture = "en"
 	CultureItalian Culture = "it"
+	CultureSpanish Culture = "es"
 )
 
 var cultureGenerators = map[Culture]Generator{
@@ -24,6 +25,7 @@ var cultureGenerators = map[Culture]Generator{
 		firstNames: itaFirstNames,
 		lastNames:  itaLastNames,
 	},
+	CultureSpanish: &spanishGenerator{},
 }
 
 func getGenerator(c Culture, r cooltures.Randomiser) (Culture, Generator) {
