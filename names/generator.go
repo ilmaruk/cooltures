@@ -1,7 +1,6 @@
 package names
 
 import (
-	"fmt"
 	"github.com/ilmaruk/cooltures"
 )
 
@@ -27,23 +26,11 @@ var cultureGenerators = map[Culture]Generator{
 	},
 }
 
-func getGenerator(c Culture, r cooltures.Randomiser) (Generator, error) {
-	if c == CultureAny {
-		var generators = make([]Generator, 0, len(cultureGenerators))
-		for _, g := range cultureGenerators {
-			generators = append(generators, g)
-		}
-		g := generators[r.Intn(len(generators))]
-		g.SetRandomiser(r)
-		return g, nil
-	}
-
-	g, ok := cultureGenerators[c]
-	if !ok {
-		return nil, fmt.Errorf("culture not supported: %s", c)
-	}
-	g.SetRandomiser(r)
-	return g, nil
+func getGenerator(c Culture, r cooltures.Randomiser) (Culture, Generator) {
+	c = pickCulture(c, r)
+	gen := cultureGenerators[c]
+	gen.SetRandomiser(r)
+	return c, gen
 }
 
 // simpleGenerator generates single first and last names from
@@ -60,7 +47,6 @@ func (s simpleGenerator) FullName(g Gender) string {
 }
 
 func (s simpleGenerator) FirstName(g Gender) string {
-	g = pickGender(g, s.rand)
 	return pickName(s.firstNames[g], s.rand)
 }
 

@@ -9,7 +9,6 @@ func BenchmarkFullNames(b *testing.B) {
 	n := names.New()
 	o := names.Options{}
 	for i := 0; i < b.N; i++ {
-		name, _ := n.FullName(o)
-		b.Log(name)
+		b.Log(n.FullName(o))
 	}
 }
